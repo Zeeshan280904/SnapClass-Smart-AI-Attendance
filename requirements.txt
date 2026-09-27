@@ -1,3 +1,5 @@
+streamlit
+
 numpy
 pandas
 
@@ -13,4 +15,5 @@ bcrypt #for password encryption
 segno #qr code generator
 pillow #image editing powers
 
-streamlit
+librosa
+resemblyzer
