@@ -32,28 +32,39 @@ def get_trained_model():
     X = []
     y = []
 
-    student_db = get_all_students() 
+    student_db = get_all_students()
 
     if not student_db:
         return None
 
     for student in student_db:
-        embedding = student.get('face_embedding')
+        embedding = student.get("face_embedding")
         if embedding:
-            X.append(np.array(embedding))
-            y.append(student.get('student_id'))
+            X.append(np.array(embedding, dtype=np.float64))
+            y.append(student.get("student_id"))
 
-        if len(X)==0:
-            return 0
+    if len(X) == 0:
+        return None
 
-        clf = SVC(kernel="linear", probability=True, class_weight='balance')
+    if len(set(y)) < 2:
+        return {
+            "clf": None,
+            "X": X,
+            "y": y
+        }
 
-        try:
-            clf.fit(X, y)
-        except ValueError:
-            pass
+    clf = SVC(
+        kernel="linear",
+        probability=True,
+        class_weight="balanced"
+    )
 
-        return {'clf':clf, 'X':X, 'y':y}
+    try:
+        clf.fit(X, y)
+    except ValueError:
+        pass
+
+    return {'clf':clf, 'X':X, 'y':y}
 
 def train_classifier():
     st.cache_resource.clear()
