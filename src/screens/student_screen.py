@@ -24,7 +24,7 @@ def student_dashboard():
         type="secondary",
         key="loginbackbtn"
     ):
-            st.session_state['is_loggen_in']= False
+            st.session_state['is_logged_in']= False
             del st.session_state.student_data
             st.rerun()
 
@@ -122,7 +122,7 @@ def student_screen():
                     student = next((s for s in all_students if s['student_id']==student_id), None)
 
                     if student:
-                        st.session_state.is_loggen_in = True
+                        st.session_state.is_logged_in = True
                         st.session_state.user_role = 'student'
                         st.session_state.student_data = student 
                         st.toast(f"Welcome back {student['name']} 👋!")
@@ -163,7 +163,7 @@ def student_screen():
 
                             if response_data:
                                 train_classifier()
-                                st.session_state.is_loggen_in = True
+                                st.session_state.is_logged_in = True
                                 st.session_state.user_role = 'student'
                                 st.session_state.student_data = response_data[0] 
                                 st.toast(f"Profile Created! Hello {new_name}")
