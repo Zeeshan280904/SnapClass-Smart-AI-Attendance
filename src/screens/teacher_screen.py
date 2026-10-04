@@ -49,7 +49,7 @@ def teacher_dashboard():
         type="secondary",
         key="loginbackbtn"
     ):
-            st.session_state['is_loggen_in']= False
+            st.session_state['is_logged_in']= False
             del st.session_state.teacher_data
             st.rerun()
 
